@@ -34,6 +34,9 @@ class Click_event:
     def __str__(self):
         return str(self.position) + str(self.img)
 
+    def ping(self, msg="default message"):
+        print(msg)
+
 
 if __name__ == "__main__":
     ctl = Automator.Automator()

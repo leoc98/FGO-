@@ -1,6 +1,7 @@
 import Automator
 import Click_event
 import time
+import Event_flow
 
 position_dictionary = {
     "skill_1": (54, 432),
@@ -123,21 +124,7 @@ class Fgo_event(Event_factory):
             )
 
 
-class Event_flow:
-    def __init__(self, handler):
-        self.handler = handler
-        pass
 
-    """
-        输入一个点击流程，按照预设时间进行点击
-        flow中每个元素都是一个Click_event
-    """
-
-    def click_event_flow(self, flow):
-        for event in flow:
-            # if event.position is not None:
-            print(event)
-            event.click(self.handler)
 
 
 def select_support(support_feature):
@@ -168,8 +155,8 @@ def fight_main():
     Fight_flow.regular_fight_term([[7, 1], [6, 1], 5], [1], 21)
 
     fight_flow = Fight_flow.get_event()
-    ef = Event_flow(ctl)
-    ef.click_event_flow(fight_flow)
+    ef = Event_flow.Event_flow(ctl,fight_flow)
+    ef.click_event_flow()
 
 
 def fight_next():
@@ -194,7 +181,7 @@ def fight_next():
 
 
 def some_main():
-    ef = Event_flow(ctl)
+    ef = Event_flow.Event_flow(ctl)
     flow_parameter_list = [
         [None, "img/cba_zhuzhan.jpg", True, 0, 0],
         [None, "img/start.jpg", True, 0, 0],
@@ -257,7 +244,7 @@ def fight_copper():
     Fight_flow.regular_fight_term([8, ["master_2", 3]], [3], 30)
 
     fight_flow = Fight_flow.get_event()
-    ef = Event_flow(ctl)
+    ef = Event_flow.Event_flow(ctl)
     ef.click_event_flow(fight_flow)
 
 
@@ -269,7 +256,7 @@ def fight_silver():
 
     fight_flow = Fight_flow.get_event()
 
-    ef = Event_flow(ctl)
+    ef = Event_flow.Event_flow(ctl)
     ef.click_event_flow(fight_flow)
 
 
@@ -281,7 +268,7 @@ def fight_golden():
 
     fight_flow = Fight_flow.get_event()
 
-    ef = Event_flow(ctl)
+    ef = Event_flow.Event_flow(ctl)
     ef.click_event_flow(fight_flow)
 
 

@@ -1,6 +1,6 @@
 import cv2, numpy as np
-from utils import *
-import matplotlib.pylab as plt
+# from utils import *
+# import matplotlib.pylab as plt
 import os
 import uiautomator2 as u2
 
@@ -60,26 +60,26 @@ class UIMatcher:
         # plt.show()
         return zhongxings, max_vals
 
-    @staticmethod
-    def find_gaoliang(screen):
-        '''
-        检测高亮位置(忽略了上板边,防止成就栏弹出遮挡)
-        @return: 高亮中心相对坐标[x,y]
-        '''
-        if screen.shape[0] > screen.shape[1]:
-            screen = UIMatcher.RotateClockWise90(screen)
-        gray = cv2.cvtColor(screen, cv2.COLOR_RGB2GRAY)
-        ret, binary = cv2.threshold(gray, 130, 255, cv2.THRESH_BINARY)
-        index_1 = np.mean(np.argwhere(binary[63:, :] == 255), axis=0).astype(int)
-
-        screen = cv2.cvtColor(binary, cv2.COLOR_GRAY2RGB)
-        cv2.circle(screen, (index_1[1], index_1[0] + 63), 10, (255, 0, 0), -1)
-
-        plt.cla()
-        plt.imshow(screen)
-        plt.pause(0.01)
-        print(len(np.argwhere(binary == 255)), len(np.argwhere(binary == 0)))
-        return index_1[1] / screen.shape[1], (index_1[0] + 63) / screen.shape[0]
+    # @staticmethod
+    # def find_gaoliang(screen):
+    #     '''
+    #     检测高亮位置(忽略了上板边,防止成就栏弹出遮挡)
+    #     @return: 高亮中心相对坐标[x,y]
+    #     '''
+    #     if screen.shape[0] > screen.shape[1]:
+    #         screen = UIMatcher.RotateClockWise90(screen)
+    #     gray = cv2.cvtColor(screen, cv2.COLOR_RGB2GRAY)
+    #     ret, binary = cv2.threshold(gray, 130, 255, cv2.THRESH_BINARY)
+    #     index_1 = np.mean(np.argwhere(binary[63:, :] == 255), axis=0).astype(int)
+    #
+    #     screen = cv2.cvtColor(binary, cv2.COLOR_GRAY2RGB)
+    #     cv2.circle(screen, (index_1[1], index_1[0] + 63), 10, (255, 0, 0), -1)
+    #
+    #     plt.cla()
+    #     plt.imshow(screen)
+    #     plt.pause(0.01)
+    #     print(len(np.argwhere(binary == 255)), len(np.argwhere(binary == 0)))
+    #     return index_1[1] / screen.shape[1], (index_1[0] + 63) / screen.shape[0]
 
 #
 # d = u2.connect()
