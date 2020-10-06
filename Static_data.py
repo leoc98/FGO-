@@ -1,3 +1,5 @@
+from Automator import Automator
+
 position_dictionary = {
     "skill_1": (54, 432),
     "skill_2": (123, 432),
@@ -29,4 +31,5 @@ position_dictionary = {
 }
 wait_select = 0.6
 wait_effect = 0.4
-ctl = None
+wait_loading_fight = 10
+ctl = Automator()

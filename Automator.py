@@ -17,24 +17,29 @@ class Automator:
             self.d = u2.connect(port)
         self.dWidth, self.dHeight = self.d.window_size()
         self.appRunning = False
-
-
-    
+        self.last_screen_shot_hash = None
+        self.last_id = None
+        self.last_return_dic = None
 
     def get_butt_stat(self, screen_shot, template_paths, threshold=0.81):
         # 此函数输入要判断的图片path,屏幕截图, 阈值,   返回大于阈值的path,坐标字典,
+        this_hash = id(screen_shot)
+        this_id = id(template_paths)
+        if self.last_screen_shot_hash == this_hash and this_id == self.last_id:
+            return self.last_return_dic
+        else:
+            self.last_screen_shot_hash = this_hash
+            self.last_id = this_id
 
-        self.dWidth, self.dHeight = self.d.window_size()
-        return_dic = {}
-        zhongxings, max_vals = UIMatcher.findpic(screen_shot, template_paths=template_paths)
+            self.dWidth, self.dHeight = self.d.window_size()
+            return_dic = {}
+            zhongxings, max_vals = UIMatcher.findpic(screen_shot, template_paths=template_paths)
 
-        for i, name in enumerate(template_paths):
-            # print(name + '--' + str(round(max_vals[i], 3)), end=' ')
-            # print(max_vals)
-            if max_vals[i] > threshold:
+            for i, name in enumerate(template_paths):
+                if max_vals[i] > threshold:
+                    return_dic[name] = (zhongxings[i][0] * self.dWidth, zhongxings[i][1] * self.dHeight)
 
-                return_dic[name] = (zhongxings[i][0] * self.dWidth, zhongxings[i][1] * self.dHeight)
-        # print('')
+            self.last_return_dic = return_dic
         # print(return_dic)
         return return_dic
 
@@ -71,19 +76,15 @@ class Automator:
         else:
             if suiji:
                 # print('未找到所需的按钮,将点击左上角')
-                self.d.click(10,400)
+                self.d.click(10, 400)
             else:
                 # print('未找到所需的按钮,无动作')
                 pass
 
-
-    def is_there_img(self, screen, img):
+    def is_there_img(self, screen_shot, img):
         self.dWidth, self.dHeight = self.d.window_size()
-        active_path = self.get_butt_stat(screen, [img])
+        active_path = self.get_butt_stat(screen_shot, [img])
         if img in active_path:
             return True
         else:
             return False
-
-  
- 

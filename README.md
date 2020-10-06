@@ -1,21 +1,18 @@
-# Princess connection 公主连结农场脚本v0.2
+# Fate Grand Order FGO自动战斗脚本v0.1
 
-[TOC]
+
 
 ## 简介
 
-此项目为国服公主连结脚本，使用opencv图像识别进行按钮分析。本项目基于公主连接opencv高级脚本(https://github.com/bbpp222006/Princess-connection) 开发。
+此项目为国服命运冠位指定脚本，使用opencv图像识别进行按钮分析。
 
 目前实现的功能有
 
-1. 账号批量登录/退出；
-2. 收取所有礼物；
-3. 检测行会捐赠请求并捐赠；
-4. 地下城自动刷支援，默认第一个人，请确保支援角色不大于农场号等级+30；
-5. 购买3次体力；
-6. 收取所有任务报酬；
-7. 刷全部10图3次（请确保你的农场号已经全部3星通关）；
-8. 购买70次mana（主程序中没有包含，为额外脚本）。
+1. 根据图片自动选择助战角色，若角色不存在，会自动进行助战刷新，直到找到；
+2. 根据设定流程进行宝具洗地；
+3. 战斗结束后连续出击重复刷本，若体力不足，则默认先金后银苹果补充体力；
+
+*仅支持单开，多开需要自行指定adb连接端口
 
 
 ## 环境
@@ -24,7 +21,6 @@
 
 ```
 pip install opencv-python==3.* -i https://pypi.tuna.tsinghua.edu.cn/simple/
-pip install matplotlib -i https://pypi.tuna.tsinghua.edu.cn/simple/
 pip install uiautomator2 -i https://mirrors.aliyun.com/pypi/simple/
 ```
 
@@ -32,42 +28,56 @@ windows端需要adb工具，在adb文件夹，请自行手动添加到path中
 
 若使用模拟器,则需要将模拟器设置为桥接模式.  具体参考这个项目(https://github.com/Jiahonzheng/JGM-Automator)
 
-mumu模拟器无需设置，建议使用mumu模拟器
+默认使用雷电模拟器4以下（不包含）的版本，4及以上版本的雷电模拟器可能会找不到端口
 
 **重要：模拟器分辨率要求540*960**
 
+## 配置方式
 
+1. 使用文本编辑器，打开文件目录下的 ***main.py*** 进行编辑；
+
+2. 打开模拟器在助战界面对所需的助战进行截图，并保存在 ***img/*** 目录下（不建议完整截图，建议只截取助战头像的不会闪动的部份，即加不包括加成物品的部分（参考 ***img/cba_zhuzhan.jpg***）
+
+3. 将 ***main.py*** 中的 ***support*** 变量改为 ***"img/你刚才截图的名字.jpg"***
+
+4. 定义战斗流程（可直接修改 ***fight_ticket_1***，也可自定义函数），具体方式见下
+    1. 先实例化一个 ***Fgo_event***
+        ```
+        fe=Fgo_event()
+        ```
+    2. 对于每一面（换人面除外），调用一次 ***regular_fight_term*** ，该函数共有两个必须参数
+        1. ***skill_list*** ，第一个参数，用于指定该面使用的技能
 ## 使用方式
 
-1. 启动mumu模拟器，设置分辨率为540*960
+1. 启动雷电模拟器，设置分辨率为540*960
 
-2. 在任意终端（如cmd）中输入
+2. 在任意终端（如cmd）中输入以下命令，会自动在模拟器上安装一个图标为小黄车的app（ATX）
 
-```
-adb connect 127.0.0.1:7555
-python -m uiautomator2 init
-```
-
-会自动在模拟器上安装一个图标为小黄车的app（ATX）
+    ```
+    adb connect 127.0.0.1:7555
+    python -m uiautomator2 init
+    ```
 
 3. 在模拟器上打开 ATX(小黄车) ，点击 ***启动 UIAutomator*** 选项，确保 UIAutomator 是运行的。
 
-4. 在模拟器中启动公主连结，请确保安装的是b服版本；
+4. 在模拟器中启动FGO，请确保安装的是国服版本；
+
+5. 打开需要反复战斗的副本的选人界面；
 
 5. 然后在终端中输入
 
-```
-cd main.py文件所在的目录（自己复制）
-例如：cd C:\Users\Administrator\Documents\Princess-connection-farm
-```
+    ```
+    cd main.py文件所在的目录（自己复制）
+    例如：cd C:\Users\Administrator\Documents\Princess-connection-farm
+    ```
 
-6. 再输入
+5. 再输入以下命令，程序将按顺序自动完成简介中功能1-3。
 
-```
-python main.py
-```
+    ```
+    python main.py
+    ```
 
-程序将按顺序自动完成简介中功能1-7。
+6. 若需要停止脚本，可直接关闭终端或者模拟器（关闭模拟器终端会自动关闭）
 
 
 
