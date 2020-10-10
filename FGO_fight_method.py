@@ -42,11 +42,15 @@ def fight_next():
         screen_shot = ctl.screenshot()
         if ctl.is_there_img(screen_shot, "img/golden_apple.jpg"):
             ctl.guochang(screen_shot, ["img/golden_apple.jpg"])
-            Click_event(None, "img/apple_ok.jpg", True, wait_effect).click(ctl)
-        elif ctl.is_there_img(screen_shot, "img/silver_apple.jpg"):
+            Click_event(None, "img/apple_ok.jpg", False, wait_effect).click(ctl)
+
+        screen_shot = ctl.screenshot()
+        if ctl.is_there_img(screen_shot, "img/silver_apple.jpg"):
             ctl.guochang(screen_shot, ["img/silver_apple.jpg"])
-            Click_event(None, "img/apple_ok.jpg", True, wait_effect).click(ctl)
-        elif ctl.is_there_img(screen_shot, "img/refresh.jpg"):
+            Click_event(None, "img/apple_ok.jpg", False, wait_effect).click(ctl)
+
+        screen_shot = ctl.screenshot()
+        if ctl.is_there_img(screen_shot, "img/refresh.jpg"):
             break
 
 

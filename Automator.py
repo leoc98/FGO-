@@ -21,7 +21,7 @@ class Automator:
         self.last_id = None
         self.last_return_dic = None
 
-    def get_butt_stat(self, screen_shot, template_paths, threshold=0.81):
+    def get_butt_stat(self, screen_shot, template_paths, threshold=0.85):
         # 此函数输入要判断的图片path,屏幕截图, 阈值,   返回大于阈值的path,坐标字典,
         this_hash = id(screen_shot)
         this_id = id(template_paths)
@@ -36,6 +36,7 @@ class Automator:
             zhongxings, max_vals = UIMatcher.findpic(screen_shot, template_paths=template_paths)
 
             for i, name in enumerate(template_paths):
+                # print(max_vals[i])
                 if max_vals[i] > threshold:
                     return_dic[name] = (zhongxings[i][0] * self.dWidth, zhongxings[i][1] * self.dHeight)
 

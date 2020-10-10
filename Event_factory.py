@@ -15,21 +15,21 @@ class Event_factory:
 
 class Fgo_event(Event_factory):
     def use_skill(self, which):
-        if type(which) is str:
-            if "master" in which:
-                self.event_list.append(
-                    [position_dictionary["master_skill_option"], "img/my_term.jpg", True, wait_effect, 0],
-                )
+        # if type(which) is str:
+        #     if "master" in which:
+        #         self.event_list.append(
+        #             [position_dictionary["master_skill_option"], "img/my_term.jpg", True, wait_effect, wait_select],
+        #         )
         self.event_list.append(
             [position_dictionary[f"skill_{which}"], "img/my_term.jpg", True, wait_effect, 0]
         )
 
     def use_skill_to(self, which, who):
-        if type(which) is str:
-            if "master" in which:
-                self.event_list.append(
-                    [position_dictionary["master_skill_option"], "img/my_term.jpg", True, wait_effect, 0],
-                )
+        # if type(which) is str:
+        #     if "master" in which:
+        #         self.event_list.append(
+        #             [position_dictionary["master_skill_option"], "img/my_term.jpg", True, wait_effect, wait_select],
+        #         )
         self.event_list.append(
             [position_dictionary[f"skill_{which}"], "img/my_term.jpg", True, wait_effect, 0]
         )
